@@ -38,10 +38,9 @@ class WorldBorder(models.Model):
 
 
 class User(AbstractUser):
-#     #photo =
-#     #username =
-    nickname = models.CharField(max_length=30, null=True)
-    pass
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    avatar = models.CharField(max_length=255, null=True, blank=True)
+
 
 
 class Memory(models.Model):
