@@ -1,6 +1,7 @@
 
 
 from django.contrib.auth.models import AbstractUser
+from django.contrib.gis import forms
 from django.contrib.gis.db import models
 from django.utils import timezone
 

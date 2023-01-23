@@ -11,5 +11,5 @@ urlpatterns = [
     re_path('', include('social_django.urls', namespace='social')),
     path('memory/', MemoryListView.as_view(), name='memory'),
     path('logout/', logout_user, name='logout'),
-    path('memory/new_memory/', add_memory, name='new_memory'),
+    path('memory/new_memory/', MemoryCreateView.as_view(), name='new_memory'),
 ]

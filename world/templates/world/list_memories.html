@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Список воспоминаний</title>
-</head>
-<body>
+{% extends 'world/base.html' %}
+
+
+{% block body %}
 <li class="last"> <img src="{{ user.avatar }} "> | {{ user.get_full_name }} | <a href="{% url 'logout' %}">Выйти</a></li>
 <center><form action="new_memory">
     <button>Добавить воспоминание</button>
@@ -19,7 +16,7 @@
 {% endfor %}
 {% endif %}
 </center>
-</body>
-</html>
+{% endblock %}
+
 
 
