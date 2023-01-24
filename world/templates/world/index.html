@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-</head>
-<body>
+{% extends 'world/base.html' %}
+
+{% block user %}
+{% endblock %}
+
+{% block body %}
 <h1>Добро пожаловать в сервис хранения воспоминаний!</h1>
 Для продолжения необходимо авторизоваться
 <br><br>
 <a href="{% url "social:begin" "google-oauth2" %}">Google</a><br><br>
 <a href="/login/vk-oauth2" >VK</a>
-
-</body>
-</html>
+{% endblock %}
 

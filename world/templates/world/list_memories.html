@@ -2,7 +2,6 @@
 
 
 {% block body %}
-<li class="last"> <img src="{{ user.avatar }} "> | {{ user.get_full_name }} | <a href="{% url 'logout' %}">Выйти</a></li>
 <center><form action="new_memory">
     <button>Добавить воспоминание</button>
 </form>
@@ -11,7 +10,7 @@
 {% else %}
 <h1>Список воспоминаний пользователя <u>{{ user.get_full_name }}</u></h1>
 {% for memory in memory_list %}
-    <a href="detail_memory" >{{ memory.title }}</a>
+    <a href="{{ memory.get_absolute_url }}" >{{ memory.title }}</a>
     <p>{{ memory.description }}</p>
 {% endfor %}
 {% endif %}

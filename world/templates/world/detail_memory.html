@@ -1,0 +1,14 @@
+{% extends 'world/base.html' %}
+
+{% block head %}
+{{ memory.media }}
+{% endblock %}
+
+{% block body %}
+{{ memory.media }}
+<h1>{{ memory.title }}</h1>
+{{ memory.description|linebreaks }}
+{{ memory.location }}
+<br>
+<a href="{% url 'memory' %}">Назад</a>
+{% endblock %}

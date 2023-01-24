@@ -1,8 +1,8 @@
-
-
+from django.contrib import gis
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis import forms
 from django.contrib.gis.db import models
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 
 from geodjango import settings
@@ -50,6 +50,9 @@ class Memory(models.Model):
     location = models.PointField(verbose_name='Координаты')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='User', on_delete=models.CASCADE)
     create_date = models.DateTimeField(default=timezone.now, verbose_name="Дата создания")
+
+    def get_absolute_url(self):
+        return reverse_lazy('detail_memory', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

@@ -1,6 +1,6 @@
 
 from django.contrib.gis import forms
-from django.contrib.gis.forms import OSMWidget
+
 
 from .models import Memory
 
@@ -12,5 +12,6 @@ class AddMemoryForm(forms.Form, forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
             'description': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
-            'location': forms.OSMWidget()
+            'location': forms.OSMWidget
         }
+

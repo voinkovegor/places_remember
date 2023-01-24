@@ -12,4 +12,5 @@ urlpatterns = [
     path('memory/', MemoryListView.as_view(), name='memory'),
     path('logout/', logout_user, name='logout'),
     path('memory/new_memory/', MemoryCreateView.as_view(), name='new_memory'),
+    path('memory/<int:pk>/', ShowMemory.as_view(), name='detail_memory'),
 ]
