@@ -2,19 +2,37 @@
 
 
 {% block body %}
-<center><form action="new_memory">
-    <button>Добавить воспоминание</button>
-</form>
+
+<br>
+<div class="container text-center">
+    <form action="new_memory">
+    <button class="btn btn-primary">Добавить воспоминание</button>
+    </form>
+</div>
+
 {% if not memory_list %}
-<h2>У вас нет ни одного воспоминания</h2>
+
+<div class="container text-center"><br>
+<h3>У вас нет ни одного воспоминания</h3>
+</div>
+
 {% else %}
-<h1>Список воспоминаний пользователя <u>{{ user.get_full_name }}</u></h1>
+
+<div class="container text-center"><br>
+<h2>Список воспоминаний пользователя <u>{{ user.get_full_name }}</u></h2><br>
+</div>
+
 {% for memory in memory_list %}
-    <a href="{{ memory.get_absolute_url }}" >{{ memory.title }}</a>
-    <p>{{ memory.description }}</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 text-center text-break"><a href="{{ memory.get_absolute_url }}" ><strong>{{ memory.title }}</strong></a></div>
+        <div class="col-9 text-break"><p>{{ memory.description }}</p></div>
+  </div>
+</div>
+
 {% endfor %}
 {% endif %}
-</center>
 {% endblock %}
 
 

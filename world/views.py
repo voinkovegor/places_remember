@@ -1,12 +1,8 @@
-
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.shortcuts import render, redirect
-
 from django.views.generic import CreateView, ListView, UpdateView
-
-from .forms import AddMemoryForm, UpdateMemoryForm
+from .forms import AddMemoryForm
 from .models import *
 
 
@@ -20,10 +16,12 @@ class MemoryListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        return Memory.objects.filter(user_id=self.request.user.pk)
+        return Memory.objects.filter(user_id=self.request.user.pk).order_by('-create_date')
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('memory')
     return render(request, 'world/index.html', {'title': 'Главная страница'})
 
 # Пытался сделать переавторизацию
@@ -53,6 +51,8 @@ class MemoryCreateView(LoginRequiredMixin, CreateView):
     form_class = AddMemoryForm
     template_name = 'world/new_memory.html'
 
+    extra_context = {'title': 'Новое воспоминание'}
+
     def get_success_url(self):
         return reverse_lazy('memory')
 
@@ -64,8 +64,7 @@ class MemoryCreateView(LoginRequiredMixin, CreateView):
 class ShowMemory(LoginRequiredMixin, UpdateView):
     template_name = 'world/detail_memory.html'
     model = Memory
-    form_class = UpdateMemoryForm
-
+    form_class = AddMemoryForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

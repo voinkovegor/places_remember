@@ -4,13 +4,48 @@
 {{ form.media }}
 {% endblock %}
 
-
 {% block body %}
-<h1>Новое воспоминание</h1>
+
+<div class="text-center"><br>
+<h3>{{ title }}</h3>
+</div>
+
+{% block form_action %}
 <form action="{% url 'new_memory' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Добавить</button>
-</form>
-<a href="{% url 'memory' %}">Назад</a>
 {% endblock %}
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col-6">
+                <div><label class="form-label" for="{{ form.title.id_for_label }}">{{form.title.label}}: </label>{{ form.title }}</div>
+                <div class="form-error">{{ form.title.errors }}</div>
+                <div><label class="form-label" for="{{ form.description.id_for_label }}">{{form.description.label}}: </label>{{ form.description }}</div>
+                <div class="form-error">{{ form.description.errors }}</div>
+                </div>
+            <div class="col-6 text-center">
+                <div>
+                    <label class="form-label" for="{{ form.location.id_for_label }}">{{form.location.label}}: </label>{{ form.location }}</div>
+                    <div class="form-error">{{ form.location.errors }}</div>
+                </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="container text-center">
+          <div class="row justify-content-center">
+        <div class="col-4">
+          <button class="btn btn-success" type="submit">Сохранить</button>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-info" href="{% url 'memory' %}" role="button">Назад</a>
+        </div>
+      </div>
+    </div>
+</form>
+
+{% endblock %}
+
+
+

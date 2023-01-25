@@ -1,15 +1,5 @@
-{% extends 'world/base.html' %}
+{% extends 'world/new_memory.html' %}
 
-{% block head %}
-{{ form.media }}
-{% endblock %}
-
-{% block body %}
+{% block form_action %}
 <form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
-<br>
-<a href="{% url 'memory' %}">Назад</a>
 {% endblock %}
