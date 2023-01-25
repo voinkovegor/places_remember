@@ -5,9 +5,10 @@
 
 {% block body %}
 <h1>Добро пожаловать в сервис хранения воспоминаний!</h1>
-Для продолжения необходимо авторизоваться
+<h3>Для продолжения необходимо авторизоваться</h3>
 <br><br>
-<a href="{% url "social:begin" "google-oauth2" %}">Google</a><br><br>
+<a href="{% url "social:begin" "google-oauth2" %}">Google</a>
+<br>
 <a href="/login/vk-oauth2" >VK</a>
 {% endblock %}
 

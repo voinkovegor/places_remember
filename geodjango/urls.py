@@ -5,6 +5,7 @@ from django.urls import path, include, re_path
 
 from world.views import *
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='main'),
@@ -13,4 +14,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('memory/new_memory/', MemoryCreateView.as_view(), name='new_memory'),
     path('memory/<int:pk>/', ShowMemory.as_view(), name='detail_memory'),
+    # path('complete/<str:backend>', complete, name='complete'),
 ]

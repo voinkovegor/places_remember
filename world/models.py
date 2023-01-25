@@ -1,8 +1,8 @@
-from django.contrib import gis
+
 from django.contrib.auth.models import AbstractUser
-from django.contrib.gis import forms
+
 from django.contrib.gis.db import models
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils import timezone
 
 from geodjango import settings

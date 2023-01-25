@@ -1,12 +1,12 @@
-from django.contrib import gis
+
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.gis.forms import OSMWidget
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView
 
-from .forms import AddMemoryForm
+from django.shortcuts import render, redirect
+
+from django.views.generic import CreateView, ListView, UpdateView
+
+from .forms import AddMemoryForm, UpdateMemoryForm
 from .models import *
 
 
@@ -26,23 +26,27 @@ class MemoryListView(LoginRequiredMixin, ListView):
 def index(request):
     return render(request, 'world/index.html', {'title': 'Главная страница'})
 
+# Пытался сделать переавторизацию
+# from django.contrib.auth import REDIRECT_FIELD_NAME
+# from django.views.decorators.cache import never_cache
+# from django.views.decorators.csrf import csrf_exempt
+# from social_core.actions import do_complete
+# from social_django.utils import psa
+# from social_django.views import _do_login
+#
+# @never_cache
+# @csrf_exempt
+# @psa('social:complete')
+# def complete(request, backend, *args, **kwargs):
+#     """Override this method so we can force user to be logged out."""
+#     return do_complete(request.backend, _do_login, user=None,
+#                        redirect_name=REDIRECT_FIELD_NAME, request=request,
+#                        *args, **kwargs)
+
+
 def logout_user(request):
     logout(request)
-    return redirect('/')
-
-
-# def add_memory(request):
-#     if request.method == 'POST':
-#         form = AddMemoryForm(request.POST)
-#         if form.is_valid():
-#             print(form.cleaned_data)
-#     else:
-#         form = AddMemoryForm()
-#     return render(request, 'world/new_memory.html', {'title': "Добавить воспоминание", 'form': form})
-
-
-# def show_memory(request):
-#     return render(request, 'world/detail_memory.html')
+    return redirect('main')
 
 
 class MemoryCreateView(LoginRequiredMixin, CreateView):
@@ -57,14 +61,20 @@ class MemoryCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ShowMemory(LoginRequiredMixin, DetailView):
-    model = Memory
+class ShowMemory(LoginRequiredMixin, UpdateView):
     template_name = 'world/detail_memory.html'
-    context_object_name = 'memory'
+    model = Memory
+    form_class = UpdateMemoryForm
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = context['memory']
-        # context['location'] = gis.forms.PointField(widget=gis.forms.OSMWidget())
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('memory')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
