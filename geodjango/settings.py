@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-u+99f=ao@mwd$=b5j%$2@jylxu9$u63!x7@@^qh8k$#uf*2=3k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['testserver', '127.0.0.1']
 
 
 # Application definition
@@ -169,3 +169,4 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
     'world.pipeline.get_avatar',  # Указываем путь, где лежит функция получения аватара.
 )
+

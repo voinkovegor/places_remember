@@ -1,5 +1,5 @@
 from django.contrib.auth import logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
 from .forms import AddMemoryForm
@@ -9,6 +9,7 @@ from .models import *
 class MemoryListView(LoginRequiredMixin, ListView):
     model = Memory
     template_name = 'world/list_memories.html'
+    raise_exception = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -50,7 +51,7 @@ def logout_user(request):
 class MemoryCreateView(LoginRequiredMixin, CreateView):
     form_class = AddMemoryForm
     template_name = 'world/new_memory.html'
-
+    raise_exception = True
     extra_context = {'title': 'Новое воспоминание'}
 
     def get_success_url(self):
@@ -61,10 +62,15 @@ class MemoryCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ShowMemory(LoginRequiredMixin, UpdateView):
+class ShowMemory(UserPassesTestMixin, UpdateView):
     template_name = 'world/detail_memory.html'
     model = Memory
     form_class = AddMemoryForm
+    raise_exception = True
+
+    def test_func(self):
+        object = self.get_object()
+        return self.request.user.pk == object.user.pk
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
