@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u+99f=ao@mwd$=b5j%$2@jylxu9$u63!x7@@^qh8k$#uf*2=3k'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=1))
 
-ALLOWED_HOSTS = ['testserver', '127.0.0.1']
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -82,9 +84,12 @@ WSGI_APPLICATION = 'geodjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'geodjango',
-        'USER': 'geo',
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.contrib.gis.db.backends.postgis'),
+        'NAME': os.environ.get('SQL_DATABASE', 'geodjango'),
+        'USER': os.environ.get('SQL_USER', 'geo'),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "django"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     },
 }
 
@@ -141,12 +146,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = '51518286'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'o3s6QPug9mMnYeqi5mxm'
-
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '534736855464-hulqun4ta6fja3085u1f61a3dgrlbhav.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_VK_OAUTH2_KEY')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_VK_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 LOGIN_REDIRECT_URL = '/memory/'
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'photo']
@@ -160,8 +163,8 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.auth_allowed',
-    # 'social_core.pipeline.social_auth.social_user',  # Ниже переопределение авторизации, чтобы не появлялось исключение при входе в систему при другом авторизованном пользователе
-    'world.pipeline.social_user',
+    # 'social_core.pipeline.social_auth.social_user',  # Строка ниже взамен этой
+    'world.pipeline.social_user',   # Переопределение авторизации, чтобы не появлялось исключение при входе в систему при другом авторизованном пользователе
     'social_core.pipeline.user.get_username',
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',

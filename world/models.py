@@ -7,6 +7,8 @@ from django.utils import timezone
 
 from geodjango import settings
 
+from django.contrib.postgres.operations import CreateExtension
+from django.db import migrations
 
 class WorldBorder(models.Model):
     # Regular Django fields corresponding to the attributes in the
@@ -61,3 +63,9 @@ class Memory(models.Model):
         ordering = ['title']
 
 
+
+
+class Migration(migrations.Migration):
+    operations = [
+        CreateExtension('postgis'),
+    ]
