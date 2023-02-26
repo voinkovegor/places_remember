@@ -11,6 +11,7 @@ then
     echo "PostgreSQL started"
 fi
 
+# Для создания пустой базы данных в контейнере
 #python manage.py flush --no-input
 #python manage.py migrate
 

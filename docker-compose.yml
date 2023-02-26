@@ -24,3 +24,12 @@ services:
 
 volumes:
   postgres_data:
+
+
+# Для запуска включить SQL_HOST в settings.py (=db)
+
+#Чтобы сделать дамп существующей базы ввести команду:
+# pg_dump -U user db_name > db_filename.sql
+
+# Для загрузки дампа базы в контейнер не запускать миграции и ввести команду:
+# docker exec -i container_name(db) psql --username pg_username db_name </path/on/your/machine/dump.sql

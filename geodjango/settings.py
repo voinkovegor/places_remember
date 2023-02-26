@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': os.environ.get('SQL_DATABASE', 'geodjango'),
         'USER': os.environ.get('SQL_USER', 'geo'),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "django"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        #"HOST": os.environ.get("SQL_HOST", "localhost"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
     },
 }

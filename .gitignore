@@ -2,3 +2,5 @@
 /shelf/
 /workspace.xml
 .env*
+.idea
+geodjango_dump_db*
